@@ -1,20 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="showpaint.aspx.cs" Inherits="web_Newton_s_Iterative_showpaint" %>
+<%@ Page Language="C#" MasterPageFile="~/drawCord.master" AutoEventWireup="true" CodeFile="showpaint.aspx.cs" Inherits="web_Newton_s_Iterative_showpaint" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>无标题页</title>
-    
-</head>
-<body>
-    <script type="text/javascript">
-   
-    </script>
-    <form id="form1" runat="server">
-    <div>
-    
-    </div>
-    </form>
-</body>
-</html>
+<asp:Content ID="Content1" ContentPlaceHolderId="pic" runat="server">
+</asp:Content>

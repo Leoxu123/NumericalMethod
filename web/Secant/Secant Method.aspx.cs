@@ -43,12 +43,10 @@ public partial class web_Secant_Method : System.Web.UI.Page
         if (judgefunction(expression))
         {
             string init_eps = tbPrecision.Text.Trim();
-            Application["init_eps"] = init_eps;
-            Application["expression"] = expression;
             string init_value = tbInit.Text.Trim();
-            Application["init_value"] = init_value;
+           
             string init_value2 = tbInit2.Text.Trim();
-            Application["init_value2"] = init_value2;
+            
             if (init_eps.Length == 0 || !Is_Number.judge(init_value))
                 Response.Write("<script>alert('请输入合法精度');</script>");
             else
@@ -87,16 +85,22 @@ public partial class web_Secant_Method : System.Web.UI.Page
                     pnum++;
                     x1 = x1 - y1*(x1 - temp_x)/(y1-y0);
                     y0 = y1;
-                    
+
                 }
+                Output t2 = new Output { k = kk++, x = x1 };
+                ans.Add(t2);
+                Iterative_Point[pnum].X = (float)x1;
+                Iterative_Point[pnum].Y = (float)exprTree.run(ref expression, x1);
+                pnum++;
                 if (tms >= 50 || !isConvergent)
                     Response.Write("<script>alert('弦截法不收敛');</script>");
                 GD_Output.DataSource = ans;
                 GD_Output.DataBind();
+               
+                if (tms < 50 && isConvergent)
+                    DrawCoordinate.draw(expression, pnum, Iterative_Point, true);
 
-                Response.Write("<script language=javascript>");
-                Response.Write("parent.right.location.href='showpaint.aspx'");
-                Response.Write("</script>");
+               
 
             }
 

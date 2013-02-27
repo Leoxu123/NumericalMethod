@@ -38,33 +38,36 @@ public partial class web_Iterative_Method : System.Web.UI.Page
         ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
         const double MAX=99999999;
         string expression = tbExpr.Text.Trim();
-        Application["expression"] = expression;
+       
         if (judgefunction(expression))
         {
             string init_eps = tbPrecision.Text.Trim();
-            Application["init_eps"] = init_eps;
+           
             string init_value = tbInit.Text.Trim();
-            Application["init_value"] = init_value;
+          
 
             List<Output> ans = new List<Output>();
             double x0 = Convert.ToDouble(init_value);
             double eps = Convert.ToDouble(init_eps);
             int kk = 0;
             PointF[] Iterative_Point = new PointF[100];
+            int pnum = 0;
             Output a = new Output { Iterative_Times = kk++, Value_X = x0 };
             ans.Add(a);
+            
             double x1 = exprTree.run(ref expression, x0);
             Output a0 = new Output { Iterative_Times = kk++, Value_X = x1 };
             ans.Add(a0);
-            int pnum = 0;
+            
             int tms = 1;
             bool isConvergent = true;
             while (Math.Abs(x1 - x0) > eps&&tms<50)
             {
-                double tmpx = x1;
-                x1 = exprTree.run(ref expression, x1);
+                double tmpx = x1; 
                 Iterative_Point[pnum].X = (float)x0;
                 Iterative_Point[pnum].Y = (float)x1;
+                x1 = exprTree.run(ref expression, x1);
+                
                 if (Math.Abs(x1) > MAX)
                 {
                     isConvergent = false;
@@ -76,10 +79,18 @@ public partial class web_Iterative_Method : System.Web.UI.Page
                 Output t = new Output { Iterative_Times = kk++, Value_X = x1 };
                 ans.Add(t);
             }
+            Iterative_Point[pnum].X = (float)x0;
+            Iterative_Point[pnum++].Y = (float)x1;
+
+            Iterative_Point[pnum].X = (float)x1;
+            Iterative_Point[pnum++].Y = (float)exprTree.run(ref expression, x1);
+
             if (tms >= 50||!isConvergent)
                 Response.Write("<script>alert('迭代法不收敛');</script>");
             GD_Output.DataSource = ans;
             GD_Output.DataBind();
+            if (tms < 50 && isConvergent)
+                DrawCoordinate.draw(expression, pnum, Iterative_Point, true);
 
         }
 

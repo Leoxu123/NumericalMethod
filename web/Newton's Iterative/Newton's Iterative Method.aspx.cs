@@ -13,6 +13,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 public partial class web_Newton_s_Iterative_Method : System.Web.UI.Page
 {
@@ -38,17 +39,17 @@ public partial class web_Newton_s_Iterative_Method : System.Web.UI.Page
     {
         ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
         const double MAX = 99999999;
-        Application["expression"] = Application["init_value"] = Application["init_eps"] = "";
+        
         string expression = tbExpr.Text.Trim();
-        Application["expression"] = expression;
+       
         if(judgefunction(expression))
         {
                 
                 string init_eps = tbPrecision.Text.Trim();
-                Application["init_eps"] = init_eps;
+               
 
                 string init_value=tbInit.Text.Trim();
-                Application["init_value"] = init_value;
+               
 
                 List<Output> ans = new List<Output>();
                 double x0 = Convert.ToDouble(init_value);
@@ -79,11 +80,16 @@ public partial class web_Newton_s_Iterative_Method : System.Web.UI.Page
                     ans.Add(t);
                     tms++;
                 }
+                Iterative_Point[pnum].X = (float)x0;
+                Iterative_Point[pnum++].Y = (float)exprTree.run(ref expression,x0);
                 
                 if (tms >= 50 || !isConvergent)
                     Response.Write("<script>alert('牛顿迭代法不收敛');</script>");
                 GD_Output.DataSource = ans;
                 GD_Output.DataBind();
+                
+                   if (tms < 50 && isConvergent)
+                      DrawCoordinate.draw(expression, pnum, Iterative_Point, true);
                 
 
             }
@@ -108,4 +114,6 @@ public partial class web_Newton_s_Iterative_Method : System.Web.UI.Page
         tbInit.Text = "";
         tbPrecision.Text = "";
     }
+    
+    
 }

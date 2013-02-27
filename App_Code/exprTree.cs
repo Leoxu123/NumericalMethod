@@ -13,8 +13,6 @@ using System.Collections.Generic;
 
 public class exprTree
 {
-    //public exprTree()
-    //{
     public enum Token_value
     {
         NAME, NUMBER, END,
@@ -22,7 +20,7 @@ public class exprTree
         DIV = '/', PRINT = ';', ASSIGN = '=',
         LP = '(', RP = ')', EXPO = '^',
         MOD = '%', SIN = -1, COS = -2,
-        TAN = -3
+        TAN = -3, LN = -4
     }
     public static string str = new string(new char[101]);
     public static int id;
@@ -34,9 +32,7 @@ public class exprTree
     public static int no_of_errors;
     public static string error_string;
     public static double ans;
-    //         public table["pi"] = 3.14159265;
-    // 		public table["e"] = 2.71828;
-    // 		public table["x"] = 0;
+
     public static void init(string s, double x)
     {
         table["pi"] = 3.14159265;
@@ -159,6 +155,8 @@ public class exprTree
                         return curr_tok = Token_value.COS;
                     if (temp == "tan")
                         return curr_tok = Token_value.TAN;
+                    if (temp == "ln")
+                        return curr_tok = Token_value.LN;
                     return curr_tok = Token_value.NAME;
                 }
                 error("bad token: ");
@@ -193,6 +191,8 @@ public class exprTree
                 return Math.Cos(prim(true));
             case Token_value.TAN:
                 return Math.Tan(prim(true));
+            case Token_value.LN:
+                return Math.Log(prim(true));
             case Token_value.LP:
                 {
                     double e = expr(true);
@@ -254,7 +254,7 @@ public class exprTree
         for (int i = 0; i < s.Length - 1; ++i)
         {
             if ((char.IsDigit(s[i]) && (char.IsLetter(s[i + 1]) || s[i + 1] == '(')) ||
-                   s[i] == ')' && char.IsDigit(s[i + 1]))
+                   (s[i] == ')' && char.IsDigit(s[i + 1])) || s[i] == ')' && s[i + 1] == '(')
             {
                 string s2 = s.Insert(i + 1, "*");
                 s = s2;

@@ -1,0 +1,130 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="drawCord.master.cs" Inherits="draw_cord" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Page Template</title>
+      <script language="javascript" type="text/javascript" src="../../js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../../js/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="../../js/jquery.flot.navigate.js"></script>
+    <style type="text/css">
+        .fetchSeries
+        {
+            width: 75px;
+        }
+    </style>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+       
+         <p>
+        <input class="fetchSeries" type="button" value="绘图">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input id="enableTooltip" type="checkbox">Enable tooltip</p>
+    <div id="placeholder" style="width: 550px; height: 450px;">
+    </div>
+    
+    
+    <script type="text/javascript">
+$(function () {
+    
+    var placeholder = $("#placeholder");
+    data=[];
+    
+    $.plot(placeholder, data);
+   
+    $("input.fetchSeries").click(function () {
+        var dataurl = "../../saveFile.json";
+
+        // then fetch the data with jQuery
+        function onDataReceived(series) {
+              $.getJSON(dataurl, function(json) {
+                    var plotarea = $("#placeholder");
+                    var Iterdata=json.Iterdata;
+                    var ptdata=json.ptdata;
+                    
+                    var options = {
+                        zoom: {
+                            interactive: true
+                        },
+                        pan: {
+                            interactive: true
+                        },
+                        grid: { hoverable: true, clickable: true }
+                    };
+                    
+                    $.plot(plotarea , [
+                        {
+                            data: Iterdata,
+                            points: {show: true}
+                        },
+                        {
+                            data: ptdata,
+                            lines: { show: true, steps: false }
+                         }             
+                    ],
+                   options
+                );
+                });
+           
+    function showTooltip(x, y, contents) {
+        $('<div id="tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            display: 'none',
+            top: y + 5,
+            left: x + 5,
+            border: '1px solid #fdd',
+            padding: '2px',
+            'background-color': '#fee',
+            opacity: 0.80
+        }).appendTo("body").fadeIn(200);
+    }
+
+    var previousPoint = null;
+    $("#placeholder").bind("plothover", function (event, pos, item) {
+       
+        if ($("#enableTooltip:checked").length > 0) {
+            if (item) {
+                if (previousPoint != item.dataIndex) {
+                    previousPoint = item.dataIndex;
+                    
+                    $("#tooltip").remove();
+                    var x = item.datapoint[0],
+                        y = item.datapoint[1];
+                    
+                    showTooltip(item.pageX, item.pageY,
+                                 "("+ x +","+ y+")");
+                }
+            }
+            else {
+                $("#tooltip").remove();
+                previousPoint = null;            
+            }
+        }
+    });
+            
+     }
+         
+        $.ajax({
+            url: dataurl,
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
+       
+     });
+    setTimeout(onDataReceived, 1000);
+    
+});
+    </script>
+
+    </div>
+     <asp:ContentPlaceHolder id="pic" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

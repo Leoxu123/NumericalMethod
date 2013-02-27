@@ -31,7 +31,7 @@ public partial class web_Lagrange_interpolation : System.Web.UI.Page
         PointF[] Pt = new PointF[100];
         double[] L = new double[100];
         string pointstr = tbInputPoint.Text;
-        Application["pointstr"] = pointstr;
+       
         int num = 0;
         GetPointArray.GetPoint(pointstr, ref num, inpoint);
         if (num == 0&&judgefunction())
@@ -47,9 +47,10 @@ public partial class web_Lagrange_interpolation : System.Web.UI.Page
                 Pt[n].Y = inpoint[i + 1];
                 n++;
             }
+            double x = Convert.ToDouble(tbX.Text.Trim());
             double sum = 0.0;
             string Funcstr = "";
-            double x = Convert.ToDouble(tbX.Text.Trim());
+            
             for (int i = 0; i < n; ++i)
             {
                 double fz = 1, fm = 1;
@@ -70,10 +71,11 @@ public partial class web_Lagrange_interpolation : System.Web.UI.Page
             }
             tbResult.Text = sum.ToString();
             tbFuction.Text =  "P(x) = "+Funcstr;
-            Application["Funcstr"] = Funcstr;
+            Pt[n].X = (float)x;
+            Pt[n++].Y = (float)sum;
 
-//            if (n > 0)
-//                    DrawCoordinate.draw(Funcstr, n, Pt,false);
+            if (n > 0)
+                    DrawCoordinate.draw(Funcstr, n, Pt,false);
         }
     }
     protected void btnReset_Click(object sender, EventArgs e)

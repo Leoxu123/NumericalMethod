@@ -47,10 +47,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="btnReset" runat="server" onclick="btnReset_Click" Text="重置" 
             Height="28px" Width="70px" />
-        </p>
-    <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input id='draw' type=button onclick="parent.showpaint.location.reload(true);" value="绘图"</p>
+        &nbsp;</p>
     <p>
         迭代结果如下：</p>
     <div style="overflow-y: scroll; overflow-x: hidden;height: 131px; width: 201px;">
