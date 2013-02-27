@@ -31,8 +31,6 @@ public class DrawCoordinate
         }
 
         IterPoint iter = new IterPoint();
-
-      
         iter.ptdata = new List<List<float>>();
         iter.Iterdata = new List<List<float>>();
 
@@ -49,23 +47,13 @@ public class DrawCoordinate
             List<float> temp = new List<float>();
             temp.Add(x);
             temp.Add((float)exprTree.run(ref s,(double)x));
-           
             iter.ptdata.Add(temp);
         }
 
         string jsonString = Jsonhelper.JsonSerializer<IterPoint>(iter);
         StreamWriter wr = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath("~/saveFile.json"), false, System.Text.Encoding.Default);
-        try
-        {
-            wr.Write(jsonString);
-            wr.Close();
-         
-        }
-        catch
-        {
-            Response.Write("<script>alert('文件写入失败');</script>");
-        }
-
-
+        wr.Write(jsonString);
+        wr.Close();
+       
     }
 }
