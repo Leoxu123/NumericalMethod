@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
 using System.Data;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -10,13 +9,13 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using System.Drawing;
+using System.Collections.Generic;
 
-public partial class web_Newton_s_Iterative_showpaint : System.Web.UI.Page
+/// <summary>
+///IterPoint 的摘要说明
+/// </summary>
+public class IterPoint
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-    }
+    public List<List<float>> ptdata;
+    public List<List<float>> Iterdata;
 }
-   

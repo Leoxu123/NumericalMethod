@@ -130,9 +130,13 @@ public class Paint
            GridView1.DataBind();
 
            if (Math.Abs(dif) < eps)
+           {
                TextBox1.Text = "是";
+               // DrawCoordinate.draw(s, iterNum, Iterative_Point, true);
+           }
            else
                TextBox1.Text = "否";
+
 
            return iterNum;
        }

@@ -42,17 +42,11 @@ public partial class web_bsearch : System.Web.UI.Page
             double a, b;
             a = System.Double.Parse(txt_a.Text.Trim());
             b = System.Double.Parse(txt_b.Text.Trim());
-            Application["expression"] = s;
-            Application["init_a"] = txt_a.Text.Trim();
-            Application["init_b"] = txt_b.Text.Trim();
+           
             //Application["init_eps"] = txt_precision.Text.Trim() ;
            
             int myCount=Paint.Paint_Fill(s, a, b, txt_precision, iteration_count, GridView1,TextBox1);
-            Application["init_count"] = myCount.ToString();
-            if (TextBox1.Text == "" || TextBox1.Text == "是")
-                Application["canDraw"] = 1;
-            else
-                Application["canDraw"] = 0;
+               
         }
     }
     protected void Button2_Click(object sender, EventArgs e)

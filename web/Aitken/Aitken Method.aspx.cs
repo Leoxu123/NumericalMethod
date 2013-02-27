@@ -35,16 +35,16 @@ public partial class web_Aitken_Method : System.Web.UI.Page
     protected void btnCalc_Click(object sender, EventArgs e)
     {
         ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
-        Application["expression"] = Application["init_value"] = Application["init_eps"] = "";
+       
         const double MAX = 99999999;
         string expression = tbExpr.Text.Trim();
-        Application["expression"] = expression;
+       
         if (judgefunction(expression))
         {
             string init_eps = tbPrecision.Text.Trim();
-            Application["init_eps"] = init_eps;
+           
             string init_value = tbInit.Text.Trim();
-            Application["init_value"] = init_value;
+           
             List<Output> ans = new List<Output>();
             double x0 = Convert.ToDouble(init_value);
             double eps = Convert.ToDouble(init_eps);
@@ -80,8 +80,9 @@ public partial class web_Aitken_Method : System.Web.UI.Page
                 Response.Write("<script>alert('埃特金迭代法不收敛');</script>");
             GD_Output.DataSource = ans;
             GD_Output.DataBind();
-          
 
+            if (tms < 50 && isConvergent)
+                DrawCoordinate.draw(expression, pnum, Iterative_Point, true);
         }
 
     }

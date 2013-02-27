@@ -5,17 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>无标题页</title>
-    <script type="text/javascript">
-    function test()
-    {
-        
-        parent.showpaint.location.reload(true);
-    }
-    </script>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+        <br />
+        
     
         函数<asp:Label ID="Label1" runat="server" Text="f( x ) ="></asp:Label>
 &nbsp;<asp:TextBox ID="tbExpr" runat="server" ontextchanged="tbExpr_TextChanged"></asp:TextBox>
@@ -40,6 +34,7 @@
         <asp:RegularExpressionValidator ID="v_Precision_IsNumber" runat="server" 
             ControlToValidate="tbPrecision" ErrorMessage="请输入数值" 
             ValidationExpression="^(-?\d+)(\.\d+)?"></asp:RegularExpressionValidator>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </p>
     <p>
         &nbsp;&nbsp;&nbsp;
@@ -49,15 +44,14 @@
         <asp:Button ID="btnReset" runat="server" onclick="btnReset_Click" Text="重置" 
             Height="28px" Width="70px" />
     </p>
-    <p>
-      <input id='draw' type=button onclick="test()" value="绘图"</p>
-    <p>
-        迭代结果如下：</p>
+   
+        迭代结果如下：<br />
     <div style="overflow-y: scroll; overflow-x: hidden;height: 145px; width: 210px;">
-    <asp:Panel ID="Panel1" runat="server" ScrollBars="Vertical" Width="243px">
+    <asp:Panel ID="Panel1" runat="server" ScrollBars="Vertical" Width="214px">
         <asp:GridView ID="GD_Output" runat="server" Width="215px">
         </asp:GridView>
     </asp:Panel>
+   
     </form>
 </body>
 </html>

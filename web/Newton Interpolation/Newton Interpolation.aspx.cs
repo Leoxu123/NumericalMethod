@@ -31,7 +31,7 @@ public partial class web_Newton_Interpolation : System.Web.UI.Page
         float[] inpoint = new float[200];
         PointF[] Pt = new PointF[100];
         string pointstr = tbInputPoint.Text;
-        Application["pointstr"] = pointstr;
+       
         int num = 0;
         GetPointArray.GetPoint(pointstr, ref num, inpoint);
         if (num == 0 && judgefunction())
@@ -78,7 +78,10 @@ public partial class web_Newton_Interpolation : System.Web.UI.Page
 
             tbResult.Text = sum.ToString();
             tbFuction.Text = "N(x) = " + Funcstr;
-            Application["Funcstr"] = Funcstr;
+            Pt[n].X = (float)x;
+            Pt[n++].Y = (float)sum;
+            if (n > 0)
+                DrawCoordinate.draw(Funcstr, n, Pt, false);
            
         }
     }

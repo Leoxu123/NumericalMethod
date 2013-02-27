@@ -6,17 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
-using System.Drawing;
 
-public partial class web_Newton_s_Iterative_showpaint : System.Web.UI.Page
+public partial class draw_cord : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
 }
-   
